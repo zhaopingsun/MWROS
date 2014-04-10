@@ -34,8 +34,8 @@ typedef struct {
  int    mSeconds2;
  short int  JulianDate2;
  short int  URange; //²»Ä£ºý¾àÀë
- short int  Az;// (coded: (val/8)*(180/4096) = DEG)
- short int  RadialNumber;
+ unsigned short  Az;// (coded: (val/8)*(180/4096) = DEG)
+ unsigned short    RadialNumber;
  /*     * 0 = start of new elevation
         * 1 = intermediate radial
        * 2 = end of elevation
@@ -43,7 +43,7 @@ typedef struct {
         * 4 = end of volume scan */
 
  short   int  RadialStatus;
- short int  El;
+ unsigned short   El;
  short int  ElNumber;
  short int  RangeToFirstGateOfReflectivity;
  short int  RangeToFirstGateOfDoppler;
