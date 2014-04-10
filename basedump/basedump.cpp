@@ -8,6 +8,8 @@
 // **********************************************************************
 #include "generic_basedata_cv.h"
 #include <iostream>
+#include <stdlib.h>
+#include <string.h>
 #include "NameIndex.h"
 #include "geneCodeData.h"
 //#include <unistd.h>
