@@ -27,7 +27,7 @@ int main(int argc,char *argv[])
 	if(argc<2)
 		usage();
 	char fname[256]={0};
-	int width=5,eleIdx=0,dataType=0,start=0,stop=1000;
+	int width=5,eleIdx=0,dataType=-1,start=0,stop=1000;
 	for(int i=1;i<argc;i++)
 	{
 		if(0==strcmp(argv[i],"--file"))
@@ -76,38 +76,46 @@ int main(int argc,char *argv[])
 			exit(-1);
 		}
 	}
-	FILE *fp=fopen(fname,"r");
+	FILE *fp=fopen(fname,"rb");
 	if(fp==NULL)
 	{
 		exit(-1);
 	}
 	unsigned char buf[SA_BD_RADIAL_LEN];
-	while(1== fread(buf,SA_BD_RADIAL_LEN,1,fp))
+	while(1)
 	{
+		int len=fread(buf,SA_BD_RADIAL_LEN,1,fp);
+		if(len!=1)
+		{
+			break;
+		}
 		Basedata *pbd=(Basedata*)buf;
 		float COEF=1.0/8*(180.0/4096);
 		printf("index %d ,az %.2f, el %.2f \n",pbd->RadialNumber,pbd->Az*COEF,pbd->El*COEF);
 		int const DUMP_BIN=30;
-		if(pbd->PtrOfReflectivity!=0)
+		if(dataType>0)
 		{
-			printf("Ref\t");
-			unsigned char *pStart=buf+sizeof(Basedata)+(pbd->PtrOfReflectivity)-100;
-			for(int i=0;i<DUMP_BIN;i++)
+			if(pbd->PtrOfReflectivity!=0)
 			{
-				printf("%d ",pStart[i]);
+				printf("Ref\t");
+				unsigned char *pStart=buf+sizeof(Basedata)+(pbd->PtrOfReflectivity)-100;
+				for(int i=0;i<DUMP_BIN;i++)
+				{
+					printf("%d ",pStart[i]);
+				}
+				printf("\n");
 			}
-			printf("\n");
-		}
-		if(pbd->PtrOfVelocity!=0)
-		{
-			printf("Vel\t");
-			unsigned char *pStart=buf+sizeof(Basedata)+(pbd-> PtrOfVelocity)-100;
-			for(int i=0;i<DUMP_BIN;i++)
+			if(pbd->PtrOfVelocity!=0)
 			{
-				printf("%d ",pStart[i]);
+				printf("Vel\t");
+				unsigned char *pStart=buf+sizeof(Basedata)+(pbd-> PtrOfVelocity)-100;
+				for(int i=0;i<DUMP_BIN;i++)
+				{
+					printf("%d ",pStart[i]);
+				}
+				printf("\n");
 			}
-			printf("\n");
-		}
+		}/**/
 	}
 	fclose(fp);
 	
