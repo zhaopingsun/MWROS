@@ -9,7 +9,9 @@
 #include<stdio.h>
 #include<string.h>
 #include <string>
+#include <stdlib.h>
 #include "ar2.h"
+
 using namespace std;
 void usage()
 {
