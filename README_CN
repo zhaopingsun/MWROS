@@ -1,0 +1,19 @@
+0 说明
+ 	此项目为北京敏视达雷达有限公司98D雷达基数据格式开放代码。
+      其中包括,
+	1. 当前S波段基数据读取 ar2dump 
+	2. ROSE新格式基数据读取和显示 basedump
+	3. ROSE新格式产品(PPI）读写 demo
+      4 产品格式文档 doc
+1 代码编译环境
+  LINUX
+	 RHEL/CENTOS 5.6,RHEL/CENTOS 6.4 
+	 必备软件包：gcc/g++ STL
+  WINDOWS
+	WINDOWS7 VSS2008
+2 代码编译	
+  LINUX 
+	make 
+  WINDOWS
+	打开工程文件，编译运行
+	如果报告找不到头文件错误，请将lib文件夹加入包含路径

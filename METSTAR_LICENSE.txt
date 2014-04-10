@@ -1,0 +1,31 @@
+Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+
+This copy of Ice is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 2 as
+published by the Free Software Foundation.
+
+The source code is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+details.
+
+You should have received a copy of the GNU General Public License version
+2 along with this program; if not, see http://www.gnu.org/licenses.
+
+Linking the source code statically or dynamically with other software (such as a 
+library, module or application) is making a combined work based on it. 
+Thus, the terms and conditions of the GNU General Public License version
+2 cover this combined work.
+
+If such software can only be used together with the source code, then not only the 
+combined work but the software itself is a work derived from it and as
+such shall be licensed under the terms of the GNU General Public License 
+version 2. This includes the situation where Ice is only being used 
+through an abstraction layer.
+
+If you wish to use the source code in proprietary applications, please contact us.
+
+Beijing Metstar Radar CO.,LTD
+TEL: +86-10-62988688
+No. 2 Building, No. 3 Area, Fengxiu Middle Road, Haidian District, Beijing, People's Republic of China, 100094
+
