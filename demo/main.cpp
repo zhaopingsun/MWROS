@@ -7,6 +7,8 @@
 //
 // **********************************************************************
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 #include "generic_basedata_cv.h"
 #include "generic_product_cv.h"
 #include "prodtype.h"
