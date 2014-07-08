@@ -56,7 +56,8 @@ int main (int argc,char *argv[])
 		}
 		else
 		{
-			depackIQ_kernel((unsigned short*)pIQ,(float*)gIQbuf,(getSweepLength(swphdr)-sizeof(*swphdr))/2);	
+			
+			depackIQ((unsigned short*)pIQ,(float*)gIQbuf,(getSweepLength(swphdr)-sizeof(*swphdr))/2);	
 		}	
 		int binnum=3;//swphdr->binnum;
 		int swpindex;
