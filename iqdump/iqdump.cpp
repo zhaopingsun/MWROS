@@ -6,9 +6,8 @@
 #include <fstream>
 #include <ostream>	
 
-#include "ipps.h"
-#include "ipp.h"
 #include "tspack.h"
+#include "iqfunc.h"
 
 
 #define  PI 3.1415926 
@@ -34,8 +33,8 @@ int main (int argc,char *argv[])
 {
 	
 	SweepHeaderList  shl;
-	const char *fname="/home/rda/IQ/Z9220_20120203_010600_01_CS.IQ";
-//	const char *fname="/home/rda/IQ/NJU_20140224_014916_01_RPH.IQ";
+//	const char *fname="/home/rda/IQ/Z9220_20120203_010600_01_CS.IQ";
+	const char *fname="/home/rda/IQ/NJU_20140224_014916_01_RPH.IQ";
 	TSHeader IQFileHead;
 	scanIQFile(fname,&IQFileHead,shl);
 	printf("sitename: %s\n",IQFileHead.sitename);
@@ -47,8 +46,8 @@ int main (int argc,char *argv[])
 	{
 		TSSweepHeader *swphdr=*it;
 		printf("sweep seq %d\t",swphdr->seqnum);
-		printf("AZ: %f\t",(swphdr->az)*360/pow(2.0,13));
-		printf("El: %d\t",swphdr->el);
+		printf("AZ: %.2f\t",DecodeAnteAngleDeg(IQFileHead.version,swphdr->az));
+		printf("El: %.2f\t",DecodeAnteAngleDeg(IQFileHead.version,swphdr->el));
 		printf("prf: %d\n",swphdr->prf);
 		Iqcmpl *pIQ=getIQData(swphdr);
 		if(IQFileHead.version<5)
