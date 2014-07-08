@@ -1,3 +1,4 @@
+#include <stdlib.h>
 void depackIQ_kernel(unsigned short *code, float *iq,size_t count)
 {
 	for(int i=0;i<count;i++)
