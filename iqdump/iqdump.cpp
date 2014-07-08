@@ -35,22 +35,22 @@ int main (int argc,char *argv[])
 	SweepHeaderList  shl;
 //	const char *fname="/home/rda/IQ/Z9220_20120203_010600_01_CS.IQ";
 	const char *fname="/home/rda/IQ/NJU_20140224_014916_01_RPH.IQ";
-	TSHeader IQFileHead;
-	scanIQFile(fname,&IQFileHead,shl);
-	printf("sitename: %s\n",IQFileHead.sitename);
-	printf("freq: %f\n",IQFileHead.freq);
-	printf("noise: %f\n",IQFileHead.noise);
-	printf("wavelength: %.2f\n",IQFileHead.wavelength);
+	TSHeader tsh;
+	scanIQFile(fname,&tsh,shl);
+	printf("sitename: %s\n",tsh.sitename);
+	printf("freq: %f\n",tsh.freq);
+	printf("noise: %f\n",tsh.noise);
+	printf("wavelength: %.2f\n",tsh.wavelength);
 	SweepHeaderList::iterator it;
 	for(it=shl.begin();it!=shl.end();it++)
 	{
 		TSSweepHeader *swphdr=*it;
 		printf("sweep seq %d\t",swphdr->seqnum);
-		printf("AZ: %.2f\t",DecodeAnteAngleDeg(IQFileHead.version,swphdr->az));
-		printf("El: %.2f\t",DecodeAnteAngleDeg(IQFileHead.version,swphdr->el));
+		printf("AZ: %.2f\t",DecodeAnteAngleDeg(tsh.version,swphdr->az));
+		printf("El: %.2f\t",DecodeAnteAngleDeg(tsh.version,swphdr->el));
 		printf("prf: %d\n",swphdr->prf);
 		Iqcmpl *pIQ=getIQData(swphdr);
-		if(IQFileHead.version<5)
+		if(tsh.version<5)
 		{
 			memcpy(gIQbuf,pIQ,getSweepLength(swphdr)-sizeof(*swphdr));
 		}
