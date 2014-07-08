@@ -4,7 +4,10 @@
 #include <string.h>
 size_t getSweepLength(TSSweepHeader *swphdr)
 {
-	return sizeof(*swphdr)+swphdr->binnum*2*sizeof(float);
+	int chan=swphdr->chan;
+	if(chan==0) chan=1;
+	
+	return sizeof(*swphdr)+chan*swphdr->binnum*2*sizeof(float);
 }
 TSSweepHeader *getNextSwpHeader(TSSweepHeader *swphdr)
 {

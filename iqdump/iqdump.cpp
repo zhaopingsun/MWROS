@@ -8,6 +8,7 @@
 
 #include "ipps.h"
 #include "ipp.h"
+#include "tspack.h"
 
 
 #define  PI 3.1415926 
@@ -28,18 +29,19 @@ using namespace std;
 //void pp_Process(float *I,float *Q);
 //void FFT_Process(float *I,float *Q);
 //void fftshift(int M,float *InData, float *OutData);
+Iqcmpl gIQbuf[4096*2];
 int main (int argc,char *argv[])
 {
 	
 	SweepHeaderList  shl;
 	const char *fname="/home/rda/IQ/Z9220_20120203_010600_01_CS.IQ";
+//	const char *fname="/home/rda/IQ/NJU_20140224_014916_01_RPH.IQ";
 	TSHeader IQFileHead;
 	scanIQFile(fname,&IQFileHead,shl);
 	printf("sitename: %s\n",IQFileHead.sitename);
 	printf("freq: %f\n",IQFileHead.freq);
 	printf("noise: %f\n",IQFileHead.noise);
 	printf("wavelength: %.2f\n",IQFileHead.wavelength);
-
 	SweepHeaderList::iterator it;
 	for(it=shl.begin();it!=shl.end();it++)
 	{
@@ -49,34 +51,33 @@ int main (int argc,char *argv[])
 		printf("El: %d\t",swphdr->el);
 		printf("prf: %d\n",swphdr->prf);
 		Iqcmpl *pIQ=getIQData(swphdr);
-		float *amp =new float[swphdr->binnum];
-		memset(amp,0,sizeof(float)*swphdr->binnum);
-		float *phase=new float[swphdr->binnum];
-		memset(phase,0,sizeof(float)*swphdr->binnum);
+		if(IQFileHead.version<5)
+		{
+			memcpy(gIQbuf,pIQ,getSweepLength(swphdr)-sizeof(*swphdr));
+		}
+		else
+		{
+			depackIQ_kernel((unsigned short*)pIQ,(float*)gIQbuf,(getSweepLength(swphdr)-sizeof(*swphdr))/2);	
+		}	
 		int binnum=3;//swphdr->binnum;
 		int swpindex;
 		swpindex=swphdr->swpidx;
 		//ippsCartToPolar_32fc((Ipp32fc*)pIQ,amp,phase,swphdr->binnum);
-		for (int i=0;i<binnum;i++)
+#define dump_bins(offset) \
+		for (int i=0;i<binnum;i++)  \
+		{ printf("(%f %f) ",gIQbuf[i+offset][0],gIQbuf[i+offset][1]); }\
+		 printf("\n");
+		if(swphdr->chan<=1)
 		{
-			
-			if (i%3 == 0)
-			{
-				printf("\nbinnum is %d\n",i);
-			}	
-			printf("\n(%f %f) ",pIQ[i][0],pIQ[i][1]);
-
-			
-/*
-			amp[i]=10*log10(pIQ[i][0]*pIQ[i][0]+pIQ[i][1]*pIQ[i][1]);
-			phase[i]=atan2(pIQ[i][1],pIQ[i][0])*360/(2*PI);	
-			amp[i]=20*log10(amp[i]);
-			phase[i]=phase[i]*180/PI;
-			printf("(%f %f) ",amp[i],phase[i]);
-*/
+			dump_bins(0);
 		}
-		delete []amp;
-		delete []phase;
+		else
+		{
+			printf("----hori---\n");
+			dump_bins(0);
+			printf("----vert---\n");
+			dump_bins(swphdr->binnum);
+		}
 	}
 	
 }
