@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="H:\SCI\src\lib;H:\SCI\src\include;&quot;G:\Program Files\Intel\IPP\5.1\ia32\include&quot;"
+				AdditionalIncludeDirectories="H:\SCI\src\lib;H:\SCI\src\include;&quot;G:\Program Files\Intel\IPP\5.1\ia32\include&quot;;D:\project\nwros\iqdump"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -59,8 +59,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="true"
-				AdditionalDependencies="ipps.lib ippcore.lib ippm.lib"
-				AdditionalLibraryDirectories="G:\Program Files\Intel\IPP\5.1\ia32\lib"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -170,7 +169,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\lib\rdats.cpp"
+				RelativePath="..\iqfunc.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\rdats.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\tspack.cpp"
 				>
 			</File>
 		</Filter>
