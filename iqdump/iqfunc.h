@@ -8,7 +8,7 @@
 #endif
 int const MAX_RANGE_BIN_NUM=2048;
 int const MAX_SWEEP_NUM=256;
-float DecodeAnteAngleDeg(short ang);
+float DecodeAnteAngleDeg(char ver,unsigned short ang);
 float Decibel(float temp);
 void Decibel(float *power,float *signal,int binnum);
 #define Square(f) ((f)*(f))

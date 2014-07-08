@@ -21,3 +21,14 @@ void Decibel(float *power,float *signal,int binnum)
 		signal[i]=Decibel(power[i]);
 	}
 }
+float DecodeAnteAngleDeg(char ver,unsigned short ang)
+{
+	if(ver<3)
+	{
+		return ang*360.0/8192.0; //2**13
+	}
+	else
+	{
+		return ang/100.0;
+	}
+}
