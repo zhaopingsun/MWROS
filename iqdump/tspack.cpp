@@ -1,4 +1,7 @@
 #include <stdlib.h>
+int const LOOK_UP_TABLE_SIZE=65536;
+float  gLookupTable[LOOK_UP_TABLE_SIZE];
+int gTabledInited=false;
 void depackIQ_kernel(unsigned short *code, float *iq,size_t count)
 {
 	for(int i=0;i<count;i++)
@@ -18,5 +21,30 @@ void depackIQ_kernel(unsigned short *code, float *iq,size_t count)
 		else
 			val=((float)(((int)c)<<20))/1.759218603E13;
 		iq[i]=val;
+	}
+}
+void buildLookupTable()
+{
+	if(gTabledInited)
+		return;
+	unsigned short code=0;
+	float val;
+	for(;;)
+	{
+		depackIQ_kernel(&code,&val,1);
+		gLookupTable[code]=val;
+//		printf("0x%x %d -> %e\n",code,code,val);
+		if(0==++code) break;
+	}
+	gTabledInited=true;
+}
+void depackIQ(const unsigned short *code, float *iq,size_t count)
+{
+	//we use lookup table to speed up
+	buildLookupTable();
+//	#pragma omp parallel for
+	for(int i=0;i <count;i++)
+	{
+		iq[i]=gLookupTable[code[i]];	
 	}
 }
