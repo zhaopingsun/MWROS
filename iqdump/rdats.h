@@ -34,8 +34,8 @@ struct TSSweepHeader{
 	int latitude;//latitude of the radar . presion 1/1000 deg
 	int longitude;//longtitude of the radar .as above
 	int height;// height of the radar in meter 
-	short az;//azimuth
-	short el;//elevation
+	unsigned short az;//azimuth
+	unsigned short el;//elevation
 	short prf;//pulse repeat freq in hz
 	short samples;// samples number in current radial
 	short binnum;// range bin number in this radial
