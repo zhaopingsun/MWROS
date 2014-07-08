@@ -1,5 +1,7 @@
 #include "rdats.h"
 #include<vector>
+#include <stdio.h>
+#include <string.h>
 size_t getSweepLength(TSSweepHeader *swphdr)
 {
 	return sizeof(*swphdr)+swphdr->binnum*2*sizeof(float);

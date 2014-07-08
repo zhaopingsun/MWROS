@@ -94,6 +94,7 @@ int main(int argc,char *argv[])
 		Basedata *pbd=(Basedata*)buf;
 		float COEF=1.0/8*(180.0/4096);
 		printf("index %d ,az %.2f, el %.2f \n",pbd->RadialNumber,pbd->Az*COEF,pbd->El*COEF);
+		printf("state %d,ref ptr %d , dop ptr %d\n",pbd->RadialStatus,pbd->PtrOfReflectivity,pbd->PtrOfVelocity);
 		int const DUMP_BIN=30;
 		if(dataType>0)
 		{
