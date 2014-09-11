@@ -15,6 +15,8 @@
 #include "geneCodeData.h"
 
 using namespace std;
+//special code  for no data and range fold vel/wid
+char *SP_CODE[]={"NA","RF"};
 void usage()
 {
 	
@@ -124,10 +126,10 @@ int main(int argc,char *argv[])
 						printf("%d ",c);
 					else
 					{
-						if(isSpecCode(c))
-							printf("NA ");
+						if(c<2)
+							printf("%s ",SP_CODE[c]);
 						else
-							printf("%.2f ",(c-66)/2.0);
+							printf("%.2f ",(c-66)/2.0);//decode formula for ref
 					}
 				}
 				printf("\n");
@@ -138,19 +140,21 @@ int main(int argc,char *argv[])
 				unsigned char *pStart=buf+sizeof(Basedata)+(pbd-> PtrOfVelocity)-100;
 				for(int i=0;i<DUMP_BIN;i++)
 				{
+					unsigned char c=pStart[i];
 					if(show_code)
-						printf("%d ",pStart[i]);
+						printf("%d ",c);
 					else
 					{
-						if(isSpecCode(pStart[i]))
-							printf("NA ");
+						if(c<2)
+							printf("%s ",SP_CODE[c]);
 						else
-							printf("%.2f ",(pStart[i]-129)/2.0);
+							printf("%.2f ",(c-129)/2.0);//decode formula for vel/width
 					}
 						
 				}
 				printf("\n");
 			}
+			//to be done width ,same as velocity 
 		}/**/
 	}
 	fclose(fp);
