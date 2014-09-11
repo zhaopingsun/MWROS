@@ -9,12 +9,13 @@
 
 #ifndef RADAR_BASE_DATA_H
 #define RADAR_BASE_DATA_H
-//basedata
+/*basedata
 int const CUT_START=0;
 int const CUT_MID=1;
 int const CUT_END=2;
 int const VOL_START=3;
 int const VOL_END=4;
+*/
 typedef struct {
  //CTM Header (6 halfwords)
  short int  CTMHeader[6];
