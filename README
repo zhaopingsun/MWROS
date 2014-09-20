@@ -9,7 +9,7 @@
       	doc 产品格式文档 
 # 1 代码编译环境 #
 
- ##  LINUX ##
+##  LINUX ##
 
 	 RHEL/CENTOS 5.6,RHEL/CENTOS 6.4 
 	 必备软件包：gcc/g++ STL
