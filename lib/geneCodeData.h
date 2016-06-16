@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -30,4 +30,6 @@ short codeData(geneUniDataType &udt,float val);
 float decodeData(int of,int sl,short code);
 float decodeData(geneUniDataType &udt,short code);
 bool isSpecCode(short data);
+//round to 0-360
+float roundDegree(float a);
 #endif

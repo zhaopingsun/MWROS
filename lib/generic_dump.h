@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -16,4 +16,5 @@ void dumpSite(geneSiteConfig &si);
 void dumpTask(geneTaskConfig &task);
 void dumpCuts(cvCutConfig &cuts);
 void dumpCommHeader(struct commonImage *img);
+void Timeval2String(int sec,int usec,char *buf);
 #endif

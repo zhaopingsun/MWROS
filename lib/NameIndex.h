@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -49,3 +49,4 @@ int GetProdTaskMask(int prodtype);
    get corrected data type of input
 */
 int getCorrectedRdt(int type);
+int getBasedRdt(int type);

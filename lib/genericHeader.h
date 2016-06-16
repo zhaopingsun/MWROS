@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -11,6 +11,8 @@
 int const GDT_BASEDATA=1;
 int const GDT_PRODUCT=2;
 int const GDT_TASK_CONFIG=3;
+int const GDT_CS_ECHO=4;
+int const GDT_TASKSCHD_CONFIG=5;
 int const GDT_MAGIC=0x4D545352;//MTSR
 int const MAJOR_VER=1;
 int const MINOR_VER=1;

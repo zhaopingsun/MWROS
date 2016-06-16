@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -8,6 +8,7 @@
 // **********************************************************************
 #include "geneCodeData.h"
 #include "radar_dt.h"
+#include <math.h>
 /* default code scale/offet for all data type */
 //data type value within [0,1];
 bool range01(int type)
@@ -17,7 +18,7 @@ bool range01(int type)
 //range for degree [0-360];
 bool rangedeg(int type)
 {
-	return type==RDT_PDP||type==RDT_DEG;
+	return type==RDT_PDP||type==RDT_DEG||type==RDT_PDPC;
 }
 bool getFormulaByte2(int type,int &scale,int &offset)
 {
@@ -28,7 +29,7 @@ bool getFormulaByte2(int type,int &scale,int &offset)
     }
     else if(type==RDT_RR)
     {
-        scale = 5;
+        scale = 10;
         offset = 10000;
     }
     else if(type==RDT_SHR)
@@ -59,7 +60,7 @@ bool getFormulaByte2(int type,int &scale,int &offset)
     //data range within 
     else if (range01(type))
     {
-        scale = 1000;
+        scale = 10000;
         offset = 100;
     }
     else
@@ -101,7 +102,7 @@ bool getFormulaByte1(int type,int &scale,int &offset)
     else if (rangedeg(type))
     {
         offset = MIN_DATA;
-        scale = 2;
+        scale = 1;
     }
     else if (type==RDT_KDP)
     {
@@ -130,7 +131,7 @@ bool getFormulaByte1(int type,int &scale,int &offset)
     }
     else if (type==RDT_SHR)
     {
-        offset = 130;
+        offset = MIN_DATA;
         scale = 2;
     }
     else
@@ -163,7 +164,7 @@ bool isSpecCode(short data)
 }
 short codeData(int of,int sl,float val)
 {
-    short res= (short)( val*sl+of);
+    short res= (short)( val*sl+of+0.5);
     return res>=MIN_DATA?res:0;
 }
 short codeData(geneUniDataType &udt,float val)
@@ -177,4 +178,11 @@ float decodeData(int of,int sl,short code)
 float decodeData(geneUniDataType &udt,short code)
 {
     return decodeData(udt.offset,udt.scale,code);
+}
+float roundDegree(float a)
+{
+	float phi=a;	
+	float phi_ratio=phi/360.0;
+	phi-=floor(phi_ratio)*360;
+	return phi;
 }
