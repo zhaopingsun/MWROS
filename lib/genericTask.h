@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -38,7 +38,9 @@ struct geneFilterMask{
 	unsigned int spekFilter1DDop:1;
 	unsigned int spekFilter2DLog:1;
 	unsigned int spekFilter2DDop:1;
-	unsigned int spared:26;
+	unsigned int nebor:1;//1 for enable noise estimation
+	unsigned int gccal:1;//1 for enable ground clutter calibration 
+	unsigned int spared:24;
 };
 
 int WaveformIndex(const char *swf);
@@ -63,6 +65,9 @@ struct geneCutConfig{
 	*/
 	int processMode;
 	int waveForm;
+	//for cut have one prf, prf2 and  maxrange2 should be ignored or same as prf and maxrange
+	// for cut have two prfs prf <-> maxrange  ,prf2 <->maxrange2	
+	// prf2 is used in dprf and batch mode, prf2 is the low prf (cs prf in batch mode)
 	float prf;// in hz
 	float prf2;//in hz
 	int unfoldMode;
@@ -75,6 +80,8 @@ struct geneCutConfig{
 	int logReso;
 	int dopReso;
 	int maxRange;
+	//maxrange2 will be enabled for CD mode with random phase code or SZ phase code,
+	//which means the max unfold range,2 times for RP and 3 times for SZ 
 	int maxRange2;
 	int startRange;
 	int samples;
@@ -101,7 +108,7 @@ struct geneCutConfig{
 	unsigned char gcfSlopePoints;
 	int spare[17];
 };
-typedef vector<short> shortVec;
+typedef vector<unsigned short> shortVec;
 short getMomNum(long long momMask);
 short getMomList(long long momMask,shortVec &seq);
 long long getMomMask(shortVec seq);
@@ -117,6 +124,8 @@ const char *GCFilterDesp(int gcf);
 int GCWinIndex(const char*desp);
 const char *GCWinDesp(int win);
 void formatMomMask(long long mom,long long msize,char *desp);
+void finalUpdateCut(geneCutConfig *pcc);
+int compAmbRange(int prf);
 struct geneTaskConfig{
 	char name[TASK_NAME_LENGTH];
 	char desp[TASK_DESP_LENGTH];
@@ -136,8 +145,36 @@ struct geneTaskConfig{
 	float ldrCal;
 	int spare[10];
 };
+struct geneTscConfig{
+	char taskname[TASK_NAME_LENGTH];
+	int startTime;  //seconds of task start time in one day
+	int stopTime;   //seconds of task stop time in one day 
+	int period; // seconds of task schedule period 
+	char spared[20];
+};
+struct geneTaskSchedule{
+	char name[TASK_NAME_LENGTH];
+	char desp[TASK_DESP_LENGTH];
+	int num;
+//	geneTscConfig tscConfig[MAX_TSC_NUM];
+	char spared[12];
+};
 #define SITE_CODE_LENGTH 8
 #define SITE_NAME_LENGTH 32
+
+//ALL CINRAD RADAR MODEL 
+//S BAND
+#define MODEL_SA 1
+#define MODEL_SB 2
+#define MODEL_SC 3
+//C BAND
+#define MODEL_CA 33
+#define MODEL_CB 34
+#define MODEL_CC 35
+#define MODEL_CCJ 36
+#define MODEL_CD 37
+//X BAND
+#define MODEL_XA 65 
 struct geneSiteConfig{
 	char code[SITE_CODE_LENGTH];
 	char name[SITE_NAME_LENGTH];
@@ -148,7 +185,10 @@ struct geneSiteConfig{
 	float freq;
 	float beamwidth;
 	float beamwidthVert;
-	int spare[15];
+	int rdaVersion;//rdasc source code svn version
+	short model;// refer to MODEL_xx
+	char spared[2];
+	int spare[13];
 };
 void getWaveformExplain(char*buf);
 void getPolAvailMoms(int pol,int chan,shortVec &dt);

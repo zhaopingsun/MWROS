@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -13,6 +13,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <math.h>
+#include <utility.h>
+#include "geneCodeData.h"
 int HDR_SIZE1=sizeof(geneHeader)+sizeof(geneSiteConfig)+sizeof(geneTaskConfig);
 //sizeof(ubytes)*MAX_BIN_NUM*MAX_DATA_TYPE_IN_BASE_DAT //
 unsigned char gRadBuffer[2*4096*10]={0};
@@ -150,6 +153,7 @@ int writeBasedataImage(const char*fpath,struct basedataImage &gdi)
 		if(ret!=GENE_RAD_HEADER_LEN)
 		{
 			printf("write radial failed\n");
+			fclose(fp);
 			exit(-1);
 		}
 		cvGeneMom::iterator iit;
@@ -161,6 +165,7 @@ int writeBasedataImage(const char*fpath,struct basedataImage &gdi)
 			if(ret!=GENE_MOM_HEADER_LEN)
 			{
 				printf("write mom header failed\n");
+				fclose(fp);
 				exit(-1);
 			}
 			int len=pmh->length;
@@ -171,16 +176,17 @@ int writeBasedataImage(const char*fpath,struct basedataImage &gdi)
 			if(ret!=len)
 			{
 				printf("write mom data failed\n");
+				fclose(fp);
 				exit(-1);
 			}
 		}
 	}
+	fclose(fp);
 	return 1;
 }
-typedef  vector<short> shortSeq;
 long long  getMomsInWaveFrom(int wf)
 {
-	shortSeq rtds;
+	ubytes rtds;
 	if(wf==WF_CS)
 	{
 		rtds.push_back(RDT_DBZ);
@@ -588,4 +594,90 @@ void searchCuts(struct basedataImage &bdi,cvCutMark &cutMarks)
 		}
 		radNum++;
 	}
+}
+//suppose data is bigger enough
+void decodeMomData(const cv_geneMom &gm,float *data,float def)
+{
+	for(int i=0;i<gm.data.size();i++)
+	{
+		if(!isSpecCode(gm.data[i]))
+			data[i]=decodeData(gm.udt.offset,gm.udt.scale,gm.data[i]);
+		else
+			data[i]=def;
+	}
+		
+}
+//called when moment in the image is add/deleted
+void updateRadailLength(struct basedataImage &bdi)
+{
+	cvRadial::iterator it;
+	cvGeneMom::iterator iit;	
+
+	for(it=bdi.radials.begin();it!=bdi.radials.end();it++)
+	{
+				
+		int radLen=0;
+		int momNum=0;
+		for(iit=it->mom.begin();iit!=it->mom.end();iit++)
+		{
+			int momLen=iit->udt.binSize*iit->data.size();
+			iit->udt.length=momLen;	
+			radLen+=momLen+sizeof(geneMomHeader);
+			momNum++;
+		}
+		it->length=radLen;
+		it->momNum=momNum;
+	}
+}
+//estimate task run time in seconds 
+time_t compTaskRunTime(geneTaskConfig &tc,cvCutConfig &cuts)
+{
+	int const TIME_FOR_ELEVATION_UP=2;//2 seconds for elevation up
+	int const TIME_SECTOR_OFFSET=5;//5 seconds sector direction  change
+	int const TIME_FOR_VCP_RESTART=7;// time for restart new vcp
+	float runtime=0;
+	int scanType=tc.scanType;
+	if(scanType!=SP_VOL&&scanType!=SP_SECTOR)
+		return runtime;
+	for(int i=0;i<cuts.size();i++)
+	{
+		float cutt;
+		if(scanType==SP_VOL)	
+			cutt=360/cuts[i].scanSpeed;
+		else if(scanType==SP_SECTOR)
+		{
+			float azSpan=cuts[i].endAngle-cuts[i].startAngle;
+			if(azSpan<0)
+				azSpan+=360;
+			cutt=azSpan/cuts[i].scanSpeed+TIME_SECTOR_OFFSET;
+		}
+		//add extra 3 second for elevation up
+		runtime+=cutt+TIME_FOR_ELEVATION_UP;
+	}
+	return (time_t)runtime+TIME_FOR_ELEVATION_UP;
+}
+//search for nearest azimuth between bit and eit,used by CD mode 
+bool searchNearestAz(float faz,const cvRadial::iterator bit,const cvRadial::iterator eit,cvRadial::iterator &mit)
+{
+	//max error 3 degree difference
+	int const  MAX_AZ_ERROR=3;
+	float   azerror=400;
+	cvRadial::iterator it;
+	for(it=bit;it!=eit;it++)
+	{
+		float saz=it->az;
+		float er1=fabs(faz-saz);
+		float er2=fabs(faz+360-saz);
+		float er=MIN(er1,er2);
+		if(er<azerror)
+		{
+			azerror=er;
+			mit=it;
+		}
+	}
+	if(azerror>MAX_AZ_ERROR)
+	{
+		return false;
+	}
+	return true;
 }

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -10,7 +10,7 @@
 #define TASK_CONFIG_CONST_H
 
 //not speed of light in vacuum,refractrive index of air is included.
-const float SPEED_OF_LIGHT=299735000.0;//m/s
+const float SPEED_OF_LIGHT=(float)299735000.0;//m/s
 
 enum {
 	SCAN_SYNC_AUTO=0,
@@ -64,9 +64,10 @@ enum {
 };
 #define  MAX_POL_TYPE_NUM 4 
 
+#define  MAX_TSC_NUM 16
 #define  TASK_NAME_LENGTH 32
 #define  TASK_DESP_LENGTH 128
-#define  MAX_MOM_NUM 64
+#define  MAX_MOM_NUM 64  //maxinum moment data number in raw product
 #define  MAX_CUT_NUM 32 //maximum cut number for one task
 #define  MAX_RAD_NUM 1000 //maximum radial number for one cut
 #define  MAX_BIN_NUM 4000 //maximum bin number for one radial
@@ -76,9 +77,10 @@ enum {
 	 QC_CCR=4,//CCR THRESH CONTROL BIT
 	 QC_SIG=8,//SIG THRESH CONTROL BIT
 	 QC_PMI=16,
-	 QC_DPLOG=32
+	 QC_DPLOG=32,
 	
 };
+#define QC_MAX (QC_DPLOG+1)
 #define QC_MASK_NUM 6
 #define QC_MASK_CONJ "&"
 //description of antenna rotation direction
@@ -108,11 +110,15 @@ enum {
 	WINDOW_HAMMING=1,//hamming window
 	WINDOW_BLACKMAN=2,//blackman window
 	WINDOW_ADAPTIVE=3,//adaptive window
- 	WINDOW_FUNC_NUM=4// number of window function
+	WINDOW_CHEB80=4,//DOLPH-CHEBYSHEV window
+ 	WINDOW_FUNC_NUM=5// number of window function
 };
 //phase code type
 enum {
-	PC_FIXED=0,
-	PC_RANDOM=1
+	PC_FIXED=0,//fix phase
+	PC_RANDOM=1,//random phase 
+	PC_SZ64=2,//sz 8/64 code 
+	PC_TEST=3, // test code ,download phasecode 0,1,2,3....127
+	PC_POLY=4
 };
 #endif

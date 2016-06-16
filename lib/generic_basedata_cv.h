@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -51,4 +51,8 @@ void fakeSiteInfo(const char *name,geneSiteConfig &sc);
 void searchCuts(struct basedataImage &bdi,cvCutMark &cutMarks);
 void uniCopyFromShort(unsigned char *dest,unsigned short *src,size_t binnum,size_t binSize);
 void uniCopyToShort(unsigned short *dest,unsigned char *src,size_t binnum,size_t binSize);
+void decodeMomData(const cv_geneMom &gm,float *data,float def);
+void updateRadailLength(struct basedataImage &gdi);
+time_t compTaskRunTime(geneTaskConfig &tc,cvCutConfig &cuts);
+bool searchNearestAz(float faz,const cvRadial::iterator bit,const cvRadial::iterator eit,cvRadial::iterator &mit);
 #endif

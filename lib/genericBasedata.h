@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -80,6 +80,9 @@ const int BD_HEADER_LEN=128;
 enum  RadailState{CUT_START,CUT_MID,CUT_END,VOL_START,VOL_END,
 	RHI_START, RHI_END, CUT_INIT,FORCE_END};
 enum  BaseDataTyp{BDFMT_GENERIC=0,BDFMT_CINRAD=1,BDFMT_IRIS=2,BDFMT_ORPG=3};
+#define NEBR_SCALE  (-100)
+#define CODE_NOISE(n) (NEBR_SCALE*n)
+#define DECODE_NOISE(n) (n*1.0/NEBR_SCALE)
 struct geneRadialHeader
 {
 	int state;
@@ -93,7 +96,11 @@ struct geneRadialHeader
 	int timeUsec;
 	int length;// length of data in this radial, this header is not included.
 	int momNum;//moments available in this radials.
-	int spared[5];
+	short prf;
+	unsigned short hne;//horizontal noise estimation by radial in dB
+	unsigned short vne;//vertical estimation by radial in dB
+	short sp;
+	int spared[3];
 };
 
 struct geneCutSpec

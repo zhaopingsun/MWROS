@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -27,16 +27,17 @@ const short RDT_CP = 12;        //clutter probability 0-1
 const short RDT_FLAG = 13;      //rvp flag data
 const short RDT_HCL = 14;       // hydro class
 const short RDT_CF = 15;        //clutter flag
-const short RDT_SNR = 16;       //
-const short RDT_SNRT = 17;      // snr of dbt
-const short RDT_SNRZ = 18;      // snr of dbz
-const short RDT_SMDBZ = 19;
-const short RDT_SMVEL = 20;
-const short RDT_SDPHI = 21;
-const short RDT_SDDBZ = 22;
+const short RDT_SNR = 16;       //ground clutter filtered SNR for h channel
+const short RDT_SNRV = 17;      //ground clutter filtered SNR for v channel
+const short RDT_SNRT = 18;      //unfiltered SNR for h channel used by mainb for cs/cd 
+const short RDT_POTS = 19;    //phase of time series
+const short RDT_N = 20;     // refractivity from ground clutter 
+const short RDT_COP = 21; //change of phase from POTS
+//const short RDT_SDDBZ = 22;
 const short RDT_DEG = 23;       // for wind field
 const short RDT_PROB = 24;      // probability 0-1
 const short RDT_SPEC = 25;      //spectrum
+
 
 //second class,data type  generated  by RPG QC alrigthm
 const short RDT_DBZC = 32;
@@ -59,4 +60,8 @@ const short RDT_CTR = 77;       // contour
 const short RDT_SWIS = 78;      //swis product for TianJin University
 const short RDT_RDD = 79;       //mean diameter of rain drop in mm
 const short RDT_RDN = 80;       //density ofrain drops 1/m**3
+const short RDT_ML = 81;
+const short RDT_OCR = 82;
+const short RDT_TURB = 83;
+const short RDT_DSD  = 84;
 #endif

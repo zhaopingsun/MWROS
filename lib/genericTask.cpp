@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -36,10 +36,11 @@ bool CreateDefaultNameMap()
 	WaveFormMap[WF_CS]="CS";
 	WaveFormMap[WF_CD]="CD";
 	WaveFormMap[WF_CDX]="CDX";
-	WaveFormMap[WF_BATCH]="BAT";
+	WaveFormMap[WF_BATCH]="BATCH";
 	WaveFormMap[WF_DPRF]="DPRF";
 	WaveFormMap[WF_RPHASE]="RPH";
-	WaveFormMap[WF_SZ]="SZ2";
+	const char *SZ_DESP="SZ 8/64";
+	WaveFormMap[WF_SZ]=SZ_DESP;
 	WaveFormMap[WF_SPRT]="SPRT";
 
 	ProcModeMap[PM_PPP]="PPP";//pulse pair process
@@ -91,8 +92,11 @@ bool CreateDefaultNameMap()
 	GCWinMaskMap[WINDOW_HAMMING]="HAMMING";
 	GCWinMaskMap[WINDOW_BLACKMAN]="BLACKMAN";
 
-	PhaseCodeMap[PC_FIXED]="Fixed";	
-	PhaseCodeMap[PC_RANDOM]="Random";	
+	PhaseCodeMap[PC_FIXED]="FIXED";	
+	PhaseCodeMap[PC_RANDOM]="RANDOM";	
+	PhaseCodeMap[PC_SZ64]=SZ_DESP;	
+	PhaseCodeMap[PC_TEST]="TEST";	
+	PhaseCodeMap[PC_POLY]="POLY";	
 
 	GCClassfierMap[GCC_AP]="All Pass";
 	GCClassfierMap[GCC_NP]="None Pass";
@@ -276,6 +280,10 @@ void clrMomMask(short dt,long long &momMask)
 bool isDataAvail(long long momMask,short dt)
 {
 	if(dt<0||dt>MAX_MOM_NUM) return false;
+
+        //for corrected data type
+        dt = getBasedRdt(dt);
+
 	unsigned int *pData = (unsigned int *)&momMask;
 	unsigned int bit,index;
 	bit = 1<<(dt%32);
@@ -402,9 +410,9 @@ void getWaveformExplain(char*buf)
 void getPolAvailMoms(int pol,int chan,shortVec &dt)
 {
 	// data types available for all mode
-	short COMMON_MOMS[]={RDT_DBT,RDT_DBZ,RDT_VEL,RDT_WID,RDT_SQI,RDT_SNR,-1};	
+	short COMMON_MOMS[]={RDT_DBT,RDT_DBZ,RDT_VEL,RDT_WID,RDT_SQI,RDT_SNR,RDT_CF,-1};	
 	//data types dual pol simu mode 
-	short DUAL_POL_MOMS[]={RDT_ZDR,RDT_KDP,RDT_CC,RDT_PDP,-1};
+	short DUAL_POL_MOMS[]={RDT_ZDR,RDT_KDP,RDT_CC,RDT_PDP,RDT_SNRV,-1};
 	//data types for single pol while have two channels
 	short SGL_POL_2CHAN_MOMS[]={RDT_LDR,RDT_CC,RDT_PDP,-1};
 	int i=0;
@@ -438,4 +446,19 @@ const char *GCCDesp(int gcc)
 int GCCIndex(const char *desp)
 {
 	return NameToIndex(GCClassfierMap,desp);
+}
+//update cut config after signal process and before send basedata to RPG 
+void finalUpdateCut(geneCutConfig *pcc)
+{
+	pcc->startRange=0;
+	if(pcc->waveForm==WF_CD)
+        {       
+                pcc->maxRange=pcc->maxRange2;
+        }   
+}
+//compute ambugous range  from PRF
+// range in meter
+int compAmbRange(int prf)
+{
+	return SPEED_OF_LIGHT/2/prf;
 }

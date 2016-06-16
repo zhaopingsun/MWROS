@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 1996-2014 Beijing Metstar Radar, Inc. All rights reserved.
+// Copyright (c) 1996-2016 Beijing Metstar Radar, Inc. All rights reserved.
 //
 // This copy of the source code is licensed to you under the terms described in the
 // METSTAR_LICENSE file included in this distribution.
@@ -35,19 +35,26 @@ bool CreateRdtNameMap(NameIndexMap &m)
     m[RDT_CF]="CF";
     m[RDT_RMS]="RMS";
     m[RDT_CTR]="CONTOUR";
-    m[RDT_SNR]="SNR";
+    m[RDT_SNR]="SNRH";
+    m[RDT_SNRV]="SNRV";
     m[RDT_SWIS]="SWIS";
     m[RDT_RDD]="RDD";
     m[RDT_RDN]="RDN";
+    m[RDT_ML] = "ML";
+    m[RDT_OCR] = "OCR";
+    m[RDT_TURB]="TURB";
 
-    m[RDT_DBZC]="DBZc";
-    m[RDT_VELC]="VELc";
-    m[RDT_WIDC]="WIDc";
+    m[RDT_DBZC]="Zc";
+    m[RDT_VELC]="Vc";
+    m[RDT_WIDC]="Wc";
     m[RDT_ZDRC]="ZDRc";
     m[RDT_PDPC]="PDPc";
     m[RDT_KDPC]="KDPc";
     m[RDT_CCC] ="CCc";
     m[RDT_LDRC]="LDRc";
+    m[RDT_POTS]="POTS";
+    m[RDT_COP]="COP";
+    m[RDT_N]="N";
     return true;
 }
 bool CreateRdtShortNameMap(NameIndexMap &m)
@@ -67,17 +74,25 @@ bool CreateRdtShortNameMap(NameIndexMap &m)
     m[RDT_VIL]="VIL";
     m[RDT_SHR]="SHEAR";
     m[RDT_RAIN]="RAIN";
+    m[RDT_DSD]="DSD";
     m[RDT_CC]="CC";
     m[RDT_CPA]="CPA";
     m[RDT_CP]="CP";
     m[RDT_CF]="CF";
     m[RDT_RMS]="RMS";
     m[RDT_CTR]="CTR";
-    m[RDT_SNR]="SNR";
+    m[RDT_SNR]="SNRH";
+    m[RDT_SNRV]="SNRV";
     m[RDT_SWIS]="SWIS";    
     m[RDT_RDD]="RDD";
     m[RDT_RDN]="RDN";
+    m[RDT_ML] = "ML";
+    m[RDT_OCR] = "OCR";
+    m[RDT_TURB]="TURB";
 
+    m[RDT_POTS]="POTS";
+    m[RDT_COP]="COP";
+    m[RDT_N]="N";
     m[RDT_DBZC]="Zc";
     m[RDT_VELC]="Vc";
     m[RDT_WIDC]="Wc";
@@ -96,14 +111,14 @@ bool CreateRdtUnitMap(NameIndexMap &m)
     m[RDT_WID]="m/s";
     m[RDT_SQI]="";
     m[RDT_RR]="mm/hr";
-    m[RDT_ZDR]="dBZ";
+    m[RDT_ZDR]="dB";
     m[RDT_LDR]="dB";
     m[RDT_PDP]="deg";
     m[RDT_KDP]="deg/km";
     m[RDT_HCL]="";
     m[RDT_HGT]="km";
     m[RDT_VIL]="kg/m**2";
-    m[RDT_SHR]="m/s/km";
+    m[RDT_SHR]="E-4/s";
     m[RDT_RAIN]="mm";
     m[RDT_CC]="";
     m[RDT_CPA]="";
@@ -111,18 +126,25 @@ bool CreateRdtUnitMap(NameIndexMap &m)
     m[RDT_RMS]="m/s";
     m[RDT_CTR]="";
     m[RDT_SNR]="dB";
+    m[RDT_SNRV]="dB";
     m[RDT_SWIS]="";    
     m[RDT_RDD]="mm";
     m[RDT_RDN]="1/m**3";
+    m[RDT_RDN]= "";
+    m[RDT_OCR]="%";
+    m[RDT_POTS]="deg";
+    m[RDT_COP]="deg";
+    m[RDT_N]="";
 
     m[RDT_DBZC]="dBZ";
     m[RDT_VELC]="m/s";
     m[RDT_WIDC]="m/s";
-    m[RDT_ZDRC]="dBZ";
+    m[RDT_ZDRC]="dB";
     m[RDT_PDPC]="deg";
     m[RDT_KDPC]="deg/km";
     m[RDT_CCC] ="";
     m[RDT_LDRC]="dB";
+    m[RDT_TURB]="CM E/2/3S";
     return true;
 }
 bool CreateRdtUnitNameMap(NameIndexMap &m)
@@ -149,10 +171,15 @@ bool CreateRdtUnitNameMap(NameIndexMap &m)
     m[RDT_RMS]="Root Mean Square";
     m[RDT_CTR]="Contour";
     m[RDT_SNR]="Signal Noise Ratio";
+    m[RDT_SNRV]="Total Signal Noise Ratio";
     m[RDT_SWIS]="SWIS";
-    m[RDT_RDD]="Drop Diamiter";
+    m[RDT_RDD]="Drop Diameter";
     m[RDT_RDN]="Drop Density";
-
+    m[RDT_ML]= "Melting Layer";
+    m[RDT_OCR]= "Occulation Rate";
+    m[RDT_POTS]="Phase Of Time Serise ";
+    m[RDT_COP]="Change Of POTS to Ref";
+    m[RDT_N]="Refractivity";
     m[RDT_DBZC]="Reflectivity Corrected";
     m[RDT_VELC]="Velocity Corrected";
     m[RDT_WIDC]="Spectrum Width Corrected";
@@ -161,6 +188,7 @@ bool CreateRdtUnitNameMap(NameIndexMap &m)
     m[RDT_KDPC]="Specific Differential Phase Corrected";
     m[RDT_CCC] ="Correlation Coefficient Corrected";
     m[RDT_LDRC]="Linear Differential Reflectivity Corrected";
+    m[RDT_TURB]="Turbulence";
     return true;
 }
 bool CreateProdTypeNameMap(NameIndexMap &m)
@@ -175,9 +203,14 @@ bool CreateProdTypeNameMap(NameIndexMap &m)
     m[PT_VIL]="VIL";
     m[PT_HMAX]="HMAX";
     m[PT_HSR]="HSR";
+    m[PT_SRI]="SRI";
+    m[PT_RI_VOL]="RVOL";
+    m[PT_RI_VOLC]="RVOLC";
     m[PT_VCS]="VCS";
     m[PT_LRM]="LRM";
     m[PT_LRA]="LRA";
+    m[PT_LTA]="LTA";
+    m[PT_CM]="CM";
     m[PT_WER]="WER";
     m[PT_SRM]="SRM";
     m[PT_SRR]="SRR";
@@ -191,6 +224,7 @@ bool CreateProdTypeNameMap(NameIndexMap &m)
     m[PT_HI]="HI";
     m[PT_SS]="SS";
     m[PT_WIND]="WIND";
+    m[PT_WIND_T]="WIND_T";
     m[PT_STP]="STP";
     m[PT_SPD]="SPD";
     m[PT_USP]="USP";
@@ -209,20 +243,53 @@ bool CreateProdTypeNameMap(NameIndexMap &m)
     m[PT_PDA]="PDA";
     m[PT_PDA_T]="PDA_T";
     m[PT_HCL]="HCL";
+    m[PT_MBD]="MB";
     m[PT_ML]="ML";
     m[PT_ML_T]="ML_T";
     m[PT_IGST]="IGST";
     m[PT_USER] = "USER";
     m[PT_COMP] = "COMP";
-    m[PT_CR]="MAX";
+    m[PT_NGRID] = "NGRID";
     m[PT_SWIS]="SWIS";
     m[PT_DSD]="DSD";
     m[PT_QPE]="QPE";
     m[PT_QPE_T]="QPE_T";
     m[PT_HCL_T]="HCL_T";
     m[PT_GF_T]="GFT";
-    m[PT_GFD]="GFD";
+    m[PT_GFD]="GF";
     m[PT_HVVP]="HVVP";
+    m[PT_SLINE]="SLINE";
+    m[PT_NDOP] = "NDOP";
+    m[PT_CM] = "CM";
+    m[PT_NUAM] = "NUAM";
+    m[PT_NCATCH] = "NCATCH";
+    m[PT_NSCAN] = "NSCAN";
+
+    /* for legacy products */
+    m[PT_R]   = "R";
+    m[PT_V]   = "V";
+    m[PT_SW]  = "SW";
+    m[PT_CR]  = "CR";
+    m[PT_CRC] = "CRC";
+    m[PT_ETC] = "ETC";
+    m[PT_CS]  = "CS";
+    m[PT_CSC] = "CSC";
+    m[PT_SWR] = "SWR";
+    m[PT_SWV] = "SWV";
+    m[PT_SWW] = "SWW";
+    m[PT_SWS] = "SWS";
+    m[PT_RCS] = "RCS";
+    m[PT_ET2] = "ET";
+    m[PT_SCS] = "SCS";
+    m[PT_CAR] = "CAR";
+    m[PT_CAV] = "CAV";
+    m[PT_CAS] = "CAS";
+    m[PT_PPR] = "PPR";
+    m[PT_PPV] = "PPV";
+    m[PT_PPS] = "PPS";
+    m[PT_RHR] = "RHR";
+    m[PT_RHV] = "RHV";
+    m[PT_RHS] = "RHS";
     return true;
 }
 
@@ -247,9 +314,12 @@ bool CreateProdTypeTaskMap(TypeMaskMap &m)
     m[PT_VIL]=0x11;
     m[PT_HMAX]=0x11;
     m[PT_HSR]=0x11;
+    m[PT_SRI]=0x11;
     m[PT_VCS]=0x11;
     m[PT_LRM]=0x11;
     m[PT_LRA]=0x11;
+    m[PT_LTA]=0x11;
+    m[PT_CM]=0x11;
     m[PT_WER]=0x11;
     m[PT_SRM]=0x1B;
     m[PT_SRR]=0x1B;
@@ -259,17 +329,19 @@ bool CreateProdTypeTaskMap(TypeMaskMap &m)
     m[PT_SHEAR]=0x1B;
     m[PT_STI]=0x11;
     m[PT_M]=0x11;
+    m[PT_MBD]=0x11;
     m[PT_TVS]=0x11;
     m[PT_HI]=0x11;
     m[PT_SS]=0x11;
     m[PT_WIND]=0x11;
+    m[PT_WIND_T]=0x11;
     m[PT_STP]=0x11;
     m[PT_SPD]=0x11;
     m[PT_USP]=0x11;
     m[PT_OHP]=0x11;
     m[PT_OHP_T]=0x11;
     m[PT_THP]=0x11;
-    m[PT_GAGE]=0x7F;
+    m[PT_GAGE]=0x11;
     m[PT_VAD]=0x11;
     m[PT_VWP]=0x11;
     m[PT_UAM]=0x1B;
@@ -293,6 +365,15 @@ bool CreateProdTypeTaskMap(TypeMaskMap &m)
     m[PT_GF_T]=0x11;
     m[PT_GFD]=0x11;
     m[PT_HVVP]=0x11;
+    m[PT_SLINE]=0x11;
+    m[PT_COMP]=0x1B;
+    m[PT_NGRID]=0x1B;
+    m[PT_NDOP]=0x1B;
+    m[PT_CM]=0x11;
+    m[PT_NUAM]=0x1B;
+    m[PT_CATCH]=0x1B;
+    m[PT_NCATCH]=0x1B;
+    m[PT_NSCAN]=0x1B;
     return true;
 }
 
@@ -397,5 +478,29 @@ int getCorrectedRdt(int type)
         return RDT_VELC;
     else if (type==RDT_WID)
         return RDT_WIDC;
+    else if (type==RDT_LDR)
+        return RDT_LDRC;
     else return 0;
+}
+
+
+int getBasedRdt(int type)
+{
+    if (type==RDT_ZDRC)
+        return RDT_ZDR;
+    else if (type==RDT_CCC)
+        return RDT_CC;
+    else if (type==RDT_PDPC)
+        return RDT_PDP;
+    else if (type==RDT_KDPC)
+        return RDT_KDP;
+    else if (type==RDT_DBZC)
+        return RDT_DBZ;
+    else if (type==RDT_VELC)
+        return RDT_VEL;
+    else if (type==RDT_WIDC)
+        return RDT_WID;
+    else if (type==RDT_LDRC)
+        return RDT_LDR;
+    else return type;
 }
