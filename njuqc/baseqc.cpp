@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "generic_basedata_cv.h"
+/*
+ * basedata quality control demo program
+ * */
 
 const char* OP_IF="--if";
 const char* OP_OF="--of";
