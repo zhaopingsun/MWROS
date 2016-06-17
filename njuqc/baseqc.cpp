@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include "generic_basedata_cv.h"
 /*
  * basedata quality control demo program
@@ -13,6 +14,7 @@ int basedata_cut_qc(const  geneCutConfig &cut_config,const cvRadial &rawRadials,
 }
 void help()
 {
+	_exit(-1);
 }
 int main(int argc ,char *argv[])
 {
@@ -38,6 +40,10 @@ int main(int argc ,char *argv[])
 			i++;
 			ofpath=argv[i];
 		}
+	}
+	if(fpath==NULL||ofpath==NULL)
+	{
+		help();
 	}
 
 	basedataImage bdi,qcbdi;
