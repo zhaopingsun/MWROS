@@ -6,6 +6,7 @@
 	basedump: 双偏振新格式基数据读取和显示 
 	demo: 双偏振和ROSE新格式产品(PPI）读写 
 	iqdump: IQ数据解码
+	njuqc: NJU 质量控制代码接口
       	doc 产品格式文档 
         mat  matlab 代码
 # 1 代码编译环境 #
