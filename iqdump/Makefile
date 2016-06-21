@@ -4,3 +4,5 @@ VPATH += ../lib ./
 all= iqdump
 iqdump: iqdump.o $(DEPOBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) 
+clean: 
+	rm -f *.o $(all)

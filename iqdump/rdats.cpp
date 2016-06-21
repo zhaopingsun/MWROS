@@ -19,7 +19,7 @@ Iqcmpl *getIQData(TSSweepHeader *swphdr)
 	return (Iqcmpl*)((char*)swphdr+sizeof(TSSweepHeader));
 }
 vector<char> fileCache;
-int scanIQFile(const char*fname,TSHeader *tsh,SweepHeaderList &swplist)
+int scanIQFile(const char*fname,TSHeader *tsh,SwpHdrList &swplist)
 {
 	FILE *fp=fopen(fname,"rb");
 	if(fp==NULL)

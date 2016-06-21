@@ -3,6 +3,7 @@
 #include<string.h>
 #include "rdats.h"
 //#include <io.h>
+#include <unistd.h>
 #include <fstream>
 #include <ostream>	
 
@@ -21,7 +22,7 @@ void help()
 #define DUMP_OP(a,desp) printf( "\t --%s desp \n",a);
 	DUMP_OP(OP_IF ,"input base data file");
 //	DUMP_OP(OP__AIQ ,"output product max range in km,default as input basedata");
-	exit(0);
+	_exit(0);
 }
 
 using namespace std;
@@ -32,7 +33,7 @@ Iqcmpl gIQbuf[4096*2];
 int main (int argc,char *argv[])
 {
 	
-	SweepHeaderList  shl;
+	SwpHdrList  shl;
 //	const char *fname="/home/rda/IQ/Z9220_20120203_010600_01_CS.IQ";
 	const char *fname="/home/rda/IQ/NJU_20140224_014916_01_RPH.IQ";
 	TSHeader tsh;
@@ -40,8 +41,8 @@ int main (int argc,char *argv[])
 	printf("sitename: %s\n",tsh.sitename);
 	printf("freq: %f\n",tsh.freq);
 	printf("noise: %f\n",tsh.noise);
-	printf("wavelength: %.2f\n",tsh.wavelength);
-	SweepHeaderList::iterator it;
+	//printf("wavelength: %.2f\n",tsh.wavelength);
+	SwpHdrList::iterator it;
 	for(it=shl.begin();it!=shl.end();it++)
 	{
 		TSSweepHeader *swphdr=*it;
