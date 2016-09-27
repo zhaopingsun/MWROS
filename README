@@ -1,6 +1,15 @@
 ﻿# 0 Introduction #
-    The Metstar Weather Radar Open Source Project
-
+    The Metstar Weather Radar Open Source Project. 
+    Level 1/2/3 data specification and demo codes are included.
+    
+	ar2dump: dump single pol basedata
+	basedump: dump dual pol basedata
+	demo:  dump dual pol PPI product  
+	iqdump: dump IQ file
+	njuqc: NJU QC interface
+      	doc: data specification 
+        mat  matlab codes
+    
 
 -------------------------------------------------------------------------------------
 # 0 说明 #
