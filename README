@@ -8,7 +8,7 @@
 	iqdump: dump IQ file
 	njuqc: NJU QC interface
       	doc: data specification 
-        mat:  matlab codes
+        mat:  matlab codes.SA.m for old SA basedata,demo.m and others for new standard AR2 .
     
 # 1 Development Requirement #
 
@@ -30,7 +30,7 @@
 	iqdump: IQ数据解码
 	njuqc: NJU 质量控制代码接口
       	doc 产品格式文档 
-        mat  matlab 代码
+        mat  matlab 代码.SA.m 读老单偏振数据,demo.m和其他代码读取标准格式基数据.
 # 1 代码编译环境 #
 
 ##  LINUX ##
